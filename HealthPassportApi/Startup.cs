@@ -37,6 +37,7 @@ namespace HealthPassportApi
                     document.Info.Description = "Mock authentication service";
                 };
             });
+            services.AddApplicationInsightsTelemetry();
 
         }
 
