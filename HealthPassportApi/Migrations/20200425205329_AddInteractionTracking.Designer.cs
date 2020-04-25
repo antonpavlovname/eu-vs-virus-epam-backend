@@ -4,15 +4,17 @@ using HealthPassportApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 
 namespace HealthPassportApi.Migrations
 {
     [DbContext(typeof(HealthDatabaseContext))]
-    partial class HealthDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200425205329_AddInteractionTracking")]
+    partial class AddInteractionTracking
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,13 +112,10 @@ namespace HealthPassportApi.Migrations
                     b.Property<DateTime>("CheckoutTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("InteractionEntity")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Point>("LatLong")
                         .HasColumnType("geography");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid>("Uuid")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");

@@ -18,6 +18,7 @@ namespace HealthPassportApi.Data
         public DbSet<DiseaseDescription> DiseaseDescriptions { get; set; }
         public DbSet<DiseaseUsefulUrl> UsefulReferences { get; set; }
         public DbSet<ImmuntisationStatus> ImmuntisationStatus { get; set; }
+        public DbSet<InteractionTracking> InteractionTracking { get; set; }
     }
 
     public class HealthDatabaseFactory : IDesignTimeDbContextFactory<HealthDatabaseContext>
@@ -25,7 +26,8 @@ namespace HealthPassportApi.Data
         public HealthDatabaseContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<HealthDatabaseContext>();
-            optionsBuilder.UseSqlServer("Data Source=EPCZPRAW0231;Initial Catalog=eu-vs-virus;Integrated Security=True");
+            optionsBuilder.UseSqlServer("Data Source=EPCZPRAW0231;Initial Catalog=eu-vs-virus;Integrated Security=True",
+                x => x.UseNetTopologySuite());
 
             return new HealthDatabaseContext(optionsBuilder.Options);
         }

@@ -32,7 +32,7 @@ namespace HealthPassportApi
 
             var connectionString = Configuration.GetConnectionString("HealthDbConnection");
             services.AddDbContext<HealthDatabaseContext>(options =>
-                options.UseSqlServer(connectionString));
+                options.UseSqlServer(connectionString, x => x.UseNetTopologySuite()));
 
             // Automatically perform database migration
             services.BuildServiceProvider().GetService<HealthDatabaseContext>().Database.Migrate();
