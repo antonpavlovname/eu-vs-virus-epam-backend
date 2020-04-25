@@ -17,6 +17,7 @@ namespace HealthPassportApi.Data
 
         public DbSet<DiseaseDescription> DiseaseDescriptions { get; set; }
         public DbSet<DiseaseUsefulUrl> UsefulReferences { get; set; }
+        public DbSet<ImmuntisationStatus> ImmuntisationStatus { get; set; }
     }
 
     public class HealthDatabaseFactory : IDesignTimeDbContextFactory<HealthDatabaseContext>

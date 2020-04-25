@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HealthPassportApi.Data;
 using HealthPassportApi.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace HealthPassportApi.Controllers
 {
@@ -12,13 +14,16 @@ namespace HealthPassportApi.Controllers
     [ApiController]
     public class ImmunisationController : ControllerBase
     {
+        private const string ForLive = "for live";
+        private readonly HealthDatabaseContext _context;
         private static Guid user1 = new Guid("9f71b7d3-5f8f-4824-a09c-adf63c96449c");
         private static Guid user2 = new Guid("1e139a24-8020-4e81-b0d0-fbdc7e78f55e");
         private List<ImmuntisationStatus> _immuntisationStatus =
             new List<ImmuntisationStatus>();
 
-        public ImmunisationController()
+        public ImmunisationController(HealthDatabaseContext context)
         {
+            _context = context;
             var status1 = new ImmuntisationStatus
             {
                 Uuid = user1,
@@ -42,7 +47,7 @@ namespace HealthPassportApi.Controllers
                 ImmuneType = "covid-19",
                 CertBody = "gov",
                 CertDate = DateTime.Today.Date.ToString("o"),
-                CertExpiry = "for live"
+                CertExpiry = ForLive
             };
 
             _immuntisationStatus.Add(status1);
@@ -52,39 +57,79 @@ namespace HealthPassportApi.Controllers
 
         // GET: api/Todoes/5
         [HttpGet("{uuid}")]
-        public ActionResult<IEnumerable<ImmuntisationStatus>> Get(Guid uuid, string immuneType)
+        public async Task<ActionResult<IEnumerable<ImmuntisationStatus>>> Get(Guid uuid, string immuneType)
         {
             //MockUserId
-            var query = _immuntisationStatus.Where(v => v.Uuid == uuid);
+            var query = _context.ImmuntisationStatus.Where(v => v.Uuid == uuid);
             if (immuneType!=null)
             {
                 query = query.Where(v => v.ImmuneType == immuneType);
             }
 
-            return query.ToArray();
+            var result = await query.ToArrayAsync();
+            return result.Select(ConvertImmuntisationStatusFromDb).ToList();
+        }
+
+        private ImmuntisationStatus ConvertImmuntisationStatusFromDb(DataModels.ImmuntisationStatus r)
+        {
+            return new ImmuntisationStatus
+            {
+                ImmuneType = r.ImmuneType,
+                Uuid = r.Uuid,
+                CertExpiry = ConvertDateTimeFromDb(r.CertExpiry),
+                CertDate = ConvertDateTimeFromDb(r.CertDate),
+                Tested = r.Tested,
+                CertBody = r.CertBody
+            };
+        }
+        private DataModels.ImmuntisationStatus ConvertImmuntisationStatusToDb(ImmuntisationStatus r)
+        {
+            return new DataModels.ImmuntisationStatus
+            {
+                ImmuneType = r.ImmuneType,
+                Uuid = r.Uuid,
+                CertExpiry = ConvertDateTimeToDb(r.CertExpiry),
+                CertDate = ConvertDateTimeToDb(r.CertDate),
+                Tested = r.Tested,
+                CertBody = r.CertBody
+            };
+        }
+
+        private DateTime ConvertDateTimeToDb(string dt)
+        {
+            if (dt == ForLive)
+                return DateTime.MaxValue;
+            return DateTime.Parse(dt);
+        }
+
+        private string ConvertDateTimeFromDb(DateTime dt)
+        {
+            if (dt.Year > 9999) 
+                return "for live";
+            return dt.ToString("o");
         }
 
         [HttpPost()]
-        public ActionResult<ImmuntisationStatus> Post(ImmuntisationStatus status)
+        public async Task<ActionResult<ImmuntisationStatus>> Post(ImmuntisationStatus status)
         {
-            _immuntisationStatus.Add(status);
-
-            return CreatedAtAction("Get", new { uuid = status.Uuid, immuneType = status.ImmuneType }, status);
+            var result = await _context.ImmuntisationStatus.AddAsync(ConvertImmuntisationStatusToDb(status));
+            _context.SaveChanges();
+            return CreatedAtAction("Get", new { uuid = status.Uuid, immuneType = status.ImmuneType }, ConvertImmuntisationStatusFromDb(result.Entity));
         }
 
         [HttpDelete("{uuid}")]
-        public ActionResult<ImmuntisationStatus> Delete(Guid uuid, string immuneType)
+        public async Task<ActionResult<ImmuntisationStatus>> Delete(Guid uuid, string immuneType)
         {
-            var result = _immuntisationStatus.Where(v => v.Uuid == uuid && v.ImmuneType == immuneType).SingleOrDefault();
+            var result = await _context.ImmuntisationStatus.Where(v => v.Uuid == uuid && v.ImmuneType == immuneType).SingleOrDefaultAsync();
             
             if(result == null)
             {
                 return NotFound();
             }
 
-            _immuntisationStatus.Remove(result);
-
-            return result;
+            _context.ImmuntisationStatus.Remove(result);
+            _context.SaveChanges();
+            return ConvertImmuntisationStatusFromDb(result);
         }
     }
 }
