@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using HealthPassportApi.Data;
@@ -47,29 +48,43 @@ namespace HealthPassportApi.Controllers
             });
         }
 
-        
+
         [HttpGet("{disease}")]
         public async Task<ActionResult<DiseaseDescription>> Get(string disease)
         {
-            var diseaseData = await _context.DiseaseDescriptions.Where(d => d.Name == disease).FirstOrDefaultAsync();
-            if (diseaseData == null)
+            try
             {
-                return NotFound();
-            }
 
-            DiseaseDescription result = new DiseaseDescription()
-            {
-                Treatment = diseaseData.Treatment,
-                Symptoms = diseaseData.Symptoms,
-                Vaccination = diseaseData.Vaccination,
-                Information = diseaseData.Information,
-                UsefulReferences = diseaseData.UsefulReferences.Select(d => new DiseaseUsefulUrl
+                var diseaseData = await _context.DiseaseDescriptions.Where(d => d.Name == disease)
+                    .Include(d => d.UsefulReferences)
+                    .FirstOrDefaultAsync();
+                
+                if (diseaseData == null)
+                {
+                    return NotFound();
+                }
+
+                var usefulReferences = diseaseData.UsefulReferences?.Select(d => new DiseaseUsefulUrl
                 {
                     Url = d.Url,
                     Name = d.Name
-                }).ToList()
-            };
-            return result;
+                }).ToList();
+
+                DiseaseDescription result = new DiseaseDescription()
+                {
+                    Treatment = diseaseData.Treatment,
+                    Symptoms = diseaseData.Symptoms,
+                    Vaccination = diseaseData.Vaccination,
+                    Information = diseaseData.Information,
+                    UsefulReferences = usefulReferences ?? new List<DiseaseUsefulUrl>()
+                };
+                return result;
+            }
+            catch (Exception e)
+            {
+                Trace.WriteLine(e);
+                throw;
+            }
         }
 
     }
