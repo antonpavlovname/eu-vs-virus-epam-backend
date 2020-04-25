@@ -104,7 +104,7 @@ namespace HealthPassportApi.Controllers
 
         private string ConvertDateTimeFromDb(DateTime dt)
         {
-            if (dt.Year > 9999) 
+            if (dt.Year > 9000) 
                 return "for live";
             return dt.ToString("o");
         }
