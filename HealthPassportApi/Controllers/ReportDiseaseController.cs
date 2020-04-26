@@ -36,16 +36,16 @@ namespace HealthPassportApi.Controllers
 		and persons.UserId <> @userId";
 
         [HttpPost("{userId}/{disease}")]
-        public IActionResult Post(Guid userId, string disease)
+        public async Task<ActionResult<IEnumerable<string>>> Post(Guid userId, string disease)
         {
             var userIdParameter = new SqlParameter("userId", userId);
-            var reportToPeople = _context.InteractionTracking.FromSqlRaw(sqlText, userIdParameter);
+            var reportToPeople = await _context.InteractionTracking.FromSqlRaw(sqlText, userIdParameter).ToListAsync();
             foreach (var person in reportToPeople)
             {
                 //TODO: push notifications
                 Trace.WriteLine($"{person.UserId}: {person.InteractionEntity}");
             }
-            return Accepted();
+            return reportToPeople.Select(p => p.UserId.ToString()).Distinct().ToList();
         }
     }
 }
