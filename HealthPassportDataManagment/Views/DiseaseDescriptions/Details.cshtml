@@ -1,0 +1,42 @@
+﻿@model HealthPassportApi.DataModels.DiseaseDescription
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>DiseaseDescription</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Information)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Information)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Symptoms)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Symptoms)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Treatment)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Treatment)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Vaccination)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Vaccination)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Name">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
