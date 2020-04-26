@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using HealthPassportApi.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 
 namespace HealthPassportApi.Controllers
 {
@@ -11,10 +15,36 @@ namespace HealthPassportApi.Controllers
     [ApiController]
     public class ReportDiseaseController : ControllerBase
     {
-        [HttpPost("{uuid}/{disease}")]
-        public IActionResult Post(Guid uuid, string disease)
+        private readonly HealthDatabaseContext _context;
+
+        public ReportDiseaseController(HealthDatabaseContext context)
         {
-            //TODO: Fire some complex logic
+            _context = context;
+        }
+
+        private const string sqlText = @"SELECT persons.* FROM [dbo].[InteractionTracking] as persons inner join
+(SELECT [InteractionEntity]
+      ,[CheckInType] 
+      ,[CheckInTime] as StartTime
+      , DATEADD(day, 1, CONVERT(date, [CheckoutTime])) as EndTime
+      ,[LatLong]
+  FROM [dbo].[InteractionTracking]
+  WHERE [UserId]=@userId) as dangerous
+  ON persons.InteractionEntity = dangerous.InteractionEntity
+  WHERE (persons.CheckInTime BETWEEN dangerous.StartTime and dangerous.EndTime
+		or persons.CheckoutTime BETWEEN dangerous.StartTime and dangerous.EndTime)
+		and persons.UserId <> @userId";
+
+        [HttpPost("{userId}/{disease}")]
+        public IActionResult Post(Guid userId, string disease)
+        {
+            var userIdParameter = new SqlParameter("userId", userId);
+            var reportToPeople = _context.InteractionTracking.FromSqlRaw(sqlText, userIdParameter);
+            foreach (var person in reportToPeople)
+            {
+                //TODO: push notifications
+                Trace.WriteLine($"{person.UserId}: {person.InteractionEntity}");
+            }
             return Accepted();
         }
     }
