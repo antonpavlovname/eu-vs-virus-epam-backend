@@ -1,10 +1,10 @@
 ﻿@model HealthPassportApi.DataModels.DiseaseDescription
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit "+Model.Name;
 }
 
-<h1>Edit</h1>
+    <h1>Edit + @Model.Name</h1>
 
 <h4>DiseaseDescription</h4>
 <hr />
@@ -15,22 +15,22 @@
             <input type="hidden" asp-for="Name" />
             <div class="form-group">
                 <label asp-for="Information" class="control-label"></label>
-                <input asp-for="Information" class="form-control" />
+                <textarea asp-for="Information" class="form-control"></textarea>
                 <span asp-validation-for="Information" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Symptoms" class="control-label"></label>
-                <input asp-for="Symptoms" class="form-control" />
+                <textarea asp-for="Symptoms" class="form-control"></textarea>
                 <span asp-validation-for="Symptoms" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Treatment" class="control-label"></label>
-                <input asp-for="Treatment" class="form-control" />
+                <textarea asp-for="Treatment" class="form-control"></textarea>
                 <span asp-validation-for="Treatment" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Vaccination" class="control-label"></label>
-                <input asp-for="Vaccination" class="form-control" />
+                <textarea asp-for="Vaccination" class="form-control"></textarea>
                 <span asp-validation-for="Vaccination" class="text-danger"></span>
             </div>
             <div class="form-group">
