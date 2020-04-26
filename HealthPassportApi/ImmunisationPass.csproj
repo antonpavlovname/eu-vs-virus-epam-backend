@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <ApplicationInsightsResourceId>/subscriptions/e60545a0-bf32-4549-bd98-e8ae15c82d2d/resourcegroups/eu-vs-virus/providers/microsoft.insights/components/eu-vs-virus</ApplicationInsightsResourceId>
+    <RootNamespace>ImmunisationPass</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,6 +1,4 @@
-using System;
-
-namespace HealthPassportDataManagment.Models
+namespace ImmunisationPassDataManagment.Models
 {
     public class ErrorViewModel
     {

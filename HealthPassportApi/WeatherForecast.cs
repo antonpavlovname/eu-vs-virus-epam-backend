@@ -1,6 +1,6 @@
 using System;
 
-namespace HealthPassportApi
+namespace ImmunisationPass
 {
     public class WeatherForecast
     {

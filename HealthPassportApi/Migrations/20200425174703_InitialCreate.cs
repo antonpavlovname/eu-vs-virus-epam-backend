@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace HealthPassportApi.Migrations
+namespace ImmunisationPass.Migrations
 {
     public partial class InitialCreate : Migration
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace HealthPassportApi.Migrations
+namespace ImmunisationPass.Migrations
 {
     public partial class AddInteractionTrackingFix : Migration
     {

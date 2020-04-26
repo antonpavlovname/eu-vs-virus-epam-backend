@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenticationApi", "AuthenticationApi\AuthenticationApi.csproj", "{5E0FAB1C-8A4D-404D-AD9C-C672ED5B72E9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthPassportApi", "HealthPassportApi\HealthPassportApi.csproj", "{BAAC65AF-8562-4450-B11D-A1B697AF2E17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImmunisationPass", "HealthPassportApi\ImmunisationPass.csproj", "{BAAC65AF-8562-4450-B11D-A1B697AF2E17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthPassportDataManagment", "HealthPassportDataManagment\HealthPassportDataManagment.csproj", "{80715A49-A29A-4C3F-BCBD-7808FA63D337}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImmunisationPassDataManagment", "HealthPassportDataManagment\ImmunisationPassDataManagment.csproj", "{80715A49-A29A-4C3F-BCBD-7808FA63D337}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

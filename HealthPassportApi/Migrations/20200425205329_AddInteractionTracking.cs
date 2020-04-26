@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using NetTopologySuite.Geometries;
 
-namespace HealthPassportApi.Migrations
+namespace ImmunisationPass.Migrations
 {
     public partial class AddInteractionTracking : Migration
     {

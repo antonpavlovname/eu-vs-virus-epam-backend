@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using HealthPassportApi.DataModels;
+﻿using ImmunisationPass.DataModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
-namespace HealthPassportApi.Data
+namespace ImmunisationPass.Data
 {
     public class HealthDatabaseContext : DbContext
     {

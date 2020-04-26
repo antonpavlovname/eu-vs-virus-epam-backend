@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using HealthPassportApi.Data;
-using Microsoft.AspNetCore.Http;
+using ImmunisationPass.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
-namespace HealthPassportApi.Controllers
+namespace ImmunisationPass.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

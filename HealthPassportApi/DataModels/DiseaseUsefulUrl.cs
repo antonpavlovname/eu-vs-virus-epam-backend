@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace HealthPassportApi.DataModels
+namespace ImmunisationPass.DataModels
 {
     public class DiseaseUsefulUrl
     {

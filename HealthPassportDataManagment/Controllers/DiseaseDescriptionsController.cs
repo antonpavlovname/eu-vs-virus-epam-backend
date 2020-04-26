@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using ImmunisationPass.Data;
+using ImmunisationPass.DataModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using HealthPassportApi.Data;
-using HealthPassportApi.DataModels;
 
-namespace HealthPassportDataManagment.Controllers
+namespace ImmunisationPassDataManagment.Controllers
 {
     public class DiseaseDescriptionsController : Controller
     {

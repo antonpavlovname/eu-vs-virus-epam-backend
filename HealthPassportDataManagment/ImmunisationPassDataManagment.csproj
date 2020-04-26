@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HealthPassportApi\HealthPassportApi.csproj" />
+    <ProjectReference Include="..\HealthPassportApi\ImmunisationPass.csproj" />
   </ItemGroup>
 
   <ItemGroup>
