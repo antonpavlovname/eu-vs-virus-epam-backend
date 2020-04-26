@@ -106,7 +106,7 @@ namespace HealthPassportApi.Controllers
         {
             if (dt.Year > 9000) 
                 return "for live";
-            return dt.ToString("o");
+            return dt.ToString("M/d/yyyy");
         }
 
         [HttpPost()]
