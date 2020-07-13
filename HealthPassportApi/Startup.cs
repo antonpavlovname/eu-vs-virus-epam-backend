@@ -34,8 +34,8 @@ namespace ImmunisationPass
             {
                 config.PostProcess = document =>
                 {
-                    document.Info.Title = "Authentication service";
-                    document.Info.Description = "Mock authentication service";
+                    document.Info.Title = "Immunization pass";
+                    document.Info.Description = "Mock Immunization pass service";
                 };
             });
             services.AddApplicationInsightsTelemetry();
